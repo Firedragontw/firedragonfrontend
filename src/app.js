@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import './App.css';
+import './app.css';
 
 function App() {
   const [message, setMessage] = useState('');
 
   useEffect(() => {
-    fetch('hhttps://firedragonbackend.onrender.com/api') // 更改端口為 5001
+    fetch('https://firedragonbackend.onrender.com/api') // 更新為後端服務的 URL
       .then(response => response.json())
       .then(data => setMessage(data.message));
   }, []);
