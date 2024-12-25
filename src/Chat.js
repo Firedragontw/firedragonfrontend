@@ -1,19 +1,21 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import './Chat.css';
 
 const Chat = () => {
   const [message, setMessage] = useState('');
-  const [response, setResponse] = useState('');
+  const [data, setData] = useState([]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
       const res = await axios.post('/api/chat', { message });
-      setResponse(res.data.response); // 假設 API 返回的數據結構中包含 response
+      const parsedData = JSON.parse(res.data.response.replace(/'/g, '"')); // 解析 JSON 字符串
+      setData(parsedData);
     } catch (error) {
       console.error(error);
-      setResponse('Error: ' + error.message);
+      setData([{ '問題': 'Error', '答案': error.message }]);
     }
   };
 
@@ -27,9 +29,17 @@ const Chat = () => {
         />
         <button type="submit">Send</button>
       </form>
-      <div>
-        <h3>Response:</h3>
-        <p>{response}</p>
+      <div className="card-container">
+        {data.map((item, index) => (
+          <div className="card" key={index}>
+            <div className="card-front">
+              {item.問題}
+            </div>
+            <div className="card-back">
+              {item.答案}
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );
