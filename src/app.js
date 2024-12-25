@@ -5,7 +5,7 @@ function App() {
   const [message, setMessage] = useState('');
 
   useEffect(() => {
-    fetch('http://localhost:5001/api') // 更改端口為 5001
+    fetch('hhttps://firedragonbackend.onrender.com/api') // 更改端口為 5001
       .then(response => response.json())
       .then(data => setMessage(data.message));
   }, []);
